@@ -1,0 +1,6 @@
+pandas
+numpy
+seaborn
+-e .
+# -e . used so that both  setup.py and requirements.txt can be used to install the package and its dependencies. This is useful for development and testing.
+# it maps setup.py to requirements.txt and allows us to install the package in editable mode, which means that any changes made to the source code will be reflected without needing to reinstall the package.

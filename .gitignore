@@ -1,0 +1,6 @@
+venv/
+.env
+.venv/
+__pycache__/
+*.pyc
+ml_project_01.egg-info/
