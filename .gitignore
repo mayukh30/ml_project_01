@@ -3,4 +3,4 @@ venv/
 .venv/
 __pycache__/
 *.pyc
-ml_project_01.egg-info/
+*.egg-info/
