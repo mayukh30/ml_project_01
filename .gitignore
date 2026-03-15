@@ -5,6 +5,7 @@ __pycache__/
 *.pyc
 *.egg-info/
 logs/
+artifacts/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
