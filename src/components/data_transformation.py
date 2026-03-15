@@ -3,14 +3,14 @@
 
 import sys
 from dataclasses import dataclass
-import numpy as np
-import pandas as pd
-from sklearn.compose import ColumnTransformer
+import numpy as np # type: ignore
+import pandas as pd # type: ignore
+from sklearn.compose import ColumnTransformer # type: ignore
 # column tranformer is used to create pipeline
 
-from sklearn.pipeline import Pipeline
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import OneHotEncoder,StandardScaler
+from sklearn.pipeline import Pipeline # type: ignore
+from sklearn.impute import SimpleImputer # type: ignore
+from sklearn.preprocessing import OneHotEncoder,StandardScaler # type: ignore
 
 from src.exception import CustomException
 from src.logger import logging
