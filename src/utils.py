@@ -7,6 +7,7 @@ import pandas as pd # type: ignore
 import dill # type: ignore
 from sklearn.metrics import r2_score # type: ignore
 
+from sklearn.model_selection import GridSearchCV # type: ignore 
 from src.exception import CustomException
 
 def save_object(file_path,obj):
@@ -20,22 +21,40 @@ def save_object(file_path,obj):
 
     except Exception as e:
         raise CustomException(e,sys)
-    
-def evaluate_model(X_train,y_train,X_test,y_test,models):
+
+def evaluate_model(X_train, y_train, X_test, y_test, models, param):
     try:
         report = {}
 
-        for i in range(len(models)):
-            model = list(models.values())[i]
-            model.fit(X_train,y_train)
+        for model_name, model in models.items():
+            # Tune only if params exist for this model and are non-empty
+            model_params = param.get(model_name, {})
+            if model_params:
+                gs = GridSearchCV(
+                    model,
+                    param_grid=model_params,
+                    cv=3,
+                    n_jobs=-1,
+                    verbose=0
+                )
+                gs.fit(X_train, y_train)
 
-            y_test_pred = model.predict(X_test)
+                # Use the fitted best estimator from grid search.
+                best_model = gs.best_estimator_
+            else:
+                best_model = model
+                best_model.fit(X_train, y_train)
 
-            test_model_score = r2_score(y_test,y_test_pred)
+            model_train_pred = best_model.predict(X_train)
+            model_test_pred = best_model.predict(X_test)
 
-            report[list(models.keys())[i]] = test_model_score
+            train_model_score = r2_score(y_train, model_train_pred)
+            test_model_score = r2_score(y_test, model_test_pred)
+
+            report[model_name] = test_model_score
+            models[model_name] = best_model
 
         return report
 
     except Exception as e:
-        raise CustomException(e,sys)
+        raise CustomException(e, sys)
