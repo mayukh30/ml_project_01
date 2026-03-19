@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: student-performance-app
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn application:app
+    plan: free
+    autoDeploy: true
